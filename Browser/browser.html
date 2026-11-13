@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a3161" />
+    <title>Magno Tours</title>
+    <link rel="stylesheet" href="browser.css" />
+    <script src="browser.js" defer></script>
+  </head>
+  <body>
+    <!-- Pantalla de carga al abrir la aplicación; browser.js la oculta al terminar -->
+    <div class="splash" id="splash" role="status" aria-label="Cargando Magno Tours">
+      <div class="splash-content">
+        <div class="brand-mark splash-mark" aria-hidden="true">
+          <span class="brand-sun"></span>
+          <span class="brand-path"></span>
+        </div>
+        <strong class="splash-title">MAGNO</strong>
+        <span class="splash-sub">TOURS</span>
+        <div class="splash-bar" aria-hidden="true"><span></span></div>
+        <p class="splash-text">Preparando tus viajes…</p>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand" aria-label="Magno Tours">
+          <div class="brand-mark" aria-hidden="true">
+            <span class="brand-sun"></span>
+            <span class="brand-path"></span>
+          </div>
+          <div>
+            <strong>MAGNO</strong>
+            <span>TOURS</span>
+          </div>
+        </div>
+
+        <button class="sidebar-toggle" type="button" id="sidebar-toggle" aria-label="Contraer o expandir el menú" aria-expanded="true" title="Contraer o expandir el menú"><span></span><span></span><span></span></button>
+
+        <nav class="main-nav" aria-label="Navegación principal">
+          <p class="nav-label">OPERACIÓN</p>
+          <button class="nav-item active" type="button" data-page="dashboard">
+            <span data-icon="home"></span><span>Inicio</span>
+          </button>
+          <button class="nav-item" type="button" data-page="clients">
+            <span data-icon="users"></span><span>Clientes</span>
+          </button>
+          <button class="nav-item" type="button" data-page="requests">
+            <span data-icon="suitcase"></span><span>Solicitudes</span>
+            <span class="nav-count" id="pending-nav-count">0</span>
+          </button>
+          <button class="nav-item" type="button" data-page="search">
+            <span data-icon="search"></span><span>Búsqueda</span>
+          </button>
+          <p class="nav-label hidden" data-min-role="Gerente">GESTIÓN</p>
+          <button class="nav-item hidden" type="button" data-page="promotions" data-min-role="Gerente">
+            <span data-icon="sparkles"></span><span>Promociones</span>
+          </button>
+          <button class="nav-item hidden" type="button" data-page="users" data-min-role="Administrador">
+            <span data-icon="users"></span><span>Usuarios</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-spacer"></div>
+
+        <!-- Panel que emerge al hacer clic en el perfil -->
+        <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true">
+          <div class="profile-menu-head">
+            <div class="avatar" id="profile-menu-avatar">AD</div>
+            <div><strong id="profile-menu-name">Asesor de viajes</strong><span id="profile-role"></span></div>
+          </div>
+          <button class="profile-option" type="button" role="menuitem" data-profile="edit"><span data-icon="user"></span>Mi perfil</button>
+          <button class="profile-option" type="button" role="menuitem" data-profile="help"><span data-icon="help"></span>Ayuda y contacto</button>
+          <button class="profile-option danger" type="button" role="menuitem" data-profile="logout"><span data-icon="arrow"></span>Cerrar sesión</button>
+        </div>
+
+        <button class="user-card" type="button" id="profile-toggle" aria-haspopup="menu" aria-expanded="false">
+          <div class="avatar" id="profile-avatar">AD</div>
+          <div>
+            <strong id="profile-name">Asesor de viajes</strong>
+            <span>Magno Tours · Actopan</span>
+          </div>
+          <span class="status-dot" title="Disponible"></span>
+        </button>
+        <div class="sidebar-resizer" id="sidebar-resizer" role="separator" aria-orientation="vertical" aria-label="Cambiar el ancho del menú" title="Arrastra para cambiar el ancho"></div>
+      </aside>
+
+      <main class="main-content">
+        <!-- Carga breve al cambiar de sección -->
+        <div class="page-loader" id="page-loader" aria-hidden="true">
+          <span class="loader-bar"></span>
+          <span class="spinner"></span>
+        </div>
+
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="page-eyebrow">PANEL DE OPERACIÓN</p>
+            <h1 id="page-title">Buenos días</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="today" id="today-label"></div>
+            <button class="icon-button" type="button" aria-label="Ayuda" id="help-button" data-icon="help"></button>
+          </div>
+        </header>
+
+        <section class="page active" id="page-dashboard" aria-label="Inicio">
+          <div class="welcome-banner">
+            <div class="welcome-copy">
+              <p class="banner-kicker"><span></span> TU DÍA EN MAGNO TOURS · ACTOPAN, HGO.</p>
+              <h2>Viajes nacionales, internacionales<br />y excursiones desde Actopan.</h2>
+              <p>Paquetes a la medida, vuelos, transporte, hospedaje, cruceros y viajes corporativos en un solo lugar. Hoy tienes <strong id="welcome-pending">0 solicitudes pendientes</strong> por atender.</p>
+              <div class="banner-actions">
+                <button class="btn btn-light" type="button" data-action="new-request"><span data-icon="plus"></span>Nueva solicitud</button>
+                <button class="btn btn-ghost-light" type="button" data-action="new-client">Registrar cliente</button>
+              </div>
+            </div>
+            <div class="banner-art" aria-hidden="true">
+              <span class="sun"></span>
+              <span class="cloud cloud-one"></span>
+              <span class="cloud cloud-two"></span>
+              <span class="plane" data-icon="plane"></span>
+              <span class="route"></span>
+              <span class="hill hill-one"></span>
+              <span class="hill hill-two"></span>
+              <span class="palm">✦</span>
+            </div>
+          </div>
+
+          <div class="stats-grid" id="stats-grid"></div>
+
+          <div class="dashboard-grid">
+            <section class="card requests-card">
+              <div class="card-header">
+                <div>
+                  <p class="section-kicker">SEGUIMIENTO</p>
+                  <h3>Solicitudes recientes</h3>
+                </div>
+                <button class="text-button" type="button" data-page-link="requests">Ver todas <span data-icon="arrow"></span></button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Cliente</th><th>Destino</th><th>Salida</th><th>Viaje</th><th>Estado</th><th></th></tr>
+                  </thead>
+                  <tbody id="recent-requests-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <aside class="card departures-card">
+              <div class="card-header">
+                <div>
+                  <p class="section-kicker">AGENDA</p>
+                  <h3>Próximas salidas</h3>
+                </div>
+                <span class="round-icon" data-icon="calendar"></span>
+              </div>
+              <div id="departures-list" class="departures-list"></div>
+            </aside>
+          </div>
+
+          <section class="card promos-card">
+            <div class="card-header">
+              <div>
+                <p class="section-kicker">MAGNO TOURS</p>
+                <h3>Promociones y servicios</h3>
+              </div>
+            </div>
+            <div class="promos-body">
+              <div class="promo-carousel">
+                <div class="promo-viewport"><div class="promo-track" id="promo-track"></div></div>
+                <div class="carousel-controls">
+                  <button class="icon-button" type="button" data-carousel="prev" aria-label="Promoción anterior">‹</button>
+                  <div class="carousel-dots" id="promo-dots"></div>
+                  <button class="icon-button" type="button" data-carousel="next" aria-label="Promoción siguiente">›</button>
+                </div>
+              </div>
+              <div class="service-list" id="service-list"></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-clients" aria-label="Clientes">
+          <div class="section-toolbar">
+            <div class="search-field"><span data-icon="search"></span><input id="client-search" type="search" placeholder="Buscar por nombre o teléfono" /></div>
+            <button class="btn btn-primary" type="button" data-action="new-client"><span data-icon="plus"></span>Nuevo cliente</button>
+          </div>
+          <div class="list-summary"><strong id="client-result-count">0 clientes</strong><span>Información de contacto y documentación de viaje</span></div>
+          <div class="client-grid" id="client-grid"></div>
+          <div class="empty-state hidden" id="clients-empty"><span data-icon="search"></span><h3>No encontramos clientes</h3><p>Prueba con otro nombre o teléfono.</p></div>
+        </section>
+
+        <section class="page" id="page-requests" aria-label="Solicitudes">
+          <div class="section-toolbar request-toolbar">
+            <div class="segmented" id="request-filters" aria-label="Filtrar solicitudes">
+              <button class="active" type="button" data-filter="Todas">Todas</button>
+              <button type="button" data-filter="Pendiente">Pendientes</button>
+              <button type="button" data-filter="En proceso">En proceso</button>
+              <button type="button" data-filter="Confirmada">Confirmadas</button>
+              <button type="button" data-filter="Cancelada">Canceladas</button>
+            </div>
+            <button class="btn btn-primary" type="button" data-action="new-request"><span data-icon="plus"></span>Nueva solicitud</button>
+          </div>
+          <section class="card full-list-card">
+            <div class="card-header list-card-header">
+              <div><p class="section-kicker">VIAJES</p><h3 id="request-list-title">Todas las solicitudes</h3></div>
+              <div class="search-field compact"><span data-icon="search"></span><input id="request-search" type="search" placeholder="Destino o cliente" /></div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Folio</th><th>Cliente</th><th>Destino</th><th>Salida</th><th>Ámbito</th><th>Viajeros</th><th>Estado</th><th></th></tr></thead>
+                <tbody id="all-requests-body"></tbody>
+              </table>
+              <div class="empty-state hidden" id="requests-empty"><span data-icon="suitcase"></span><h3>No hay solicitudes aquí</h3><p>Cambia el filtro o registra una nueva solicitud.</p></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="page-search" aria-label="Búsqueda">
+          <div class="search-hero">
+            <p class="section-kicker">BÚSQUEDA GLOBAL</p>
+            <h2>Encuentra lo que necesitas</h2>
+            <p>Busca por nombre, teléfono, destino o estado de la solicitud.</p>
+            <div class="global-search"><span data-icon="search"></span><input id="global-search" type="search" placeholder="Ej. Fernanda, 771..., Canadá o Pendiente" autocomplete="off" /></div>
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </section>
+        <section class="page" id="page-promotions" aria-label="Promociones">
+          <div class="section-toolbar">
+            <span></span>
+            <button class="btn btn-primary" type="button" data-action="new-promotion"><span data-icon="plus"></span>Nueva promoción</button>
+          </div>
+          <section class="card full-list-card"><div class="table-wrap"><table>
+            <thead><tr><th>Promoción</th><th>Servicio</th><th>Lugar</th><th>Estado</th><th></th></tr></thead>
+            <tbody id="promotions-body"></tbody>
+          </table></div></section>
+        </section>
+
+        <section class="page" id="page-users" aria-label="Usuarios">
+          <div class="section-toolbar">
+            <span></span>
+            <button class="btn btn-primary" type="button" data-action="new-user"><span data-icon="plus"></span>Nuevo usuario</button>
+          </div>
+          <section class="card full-list-card"><div class="table-wrap"><table>
+            <thead><tr><th>Nombre</th><th>Usuario</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
+            <tbody id="users-body"></tbody>
+          </table></div></section>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-layer" id="modal-layer" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <header class="modal-header">
+          <div><p class="section-kicker" id="modal-kicker">NUEVO REGISTRO</p><h2 id="modal-title">Registrar cliente</h2></div>
+          <button class="icon-button" type="button" aria-label="Cerrar" data-close-modal data-icon="close"></button>
+        </header>
+        <div class="modal-body" id="modal-body"></div>
+      </section>
+    </div>
+
+    <div class="drawer-layer" id="drawer-layer" aria-hidden="true">
+      <div class="modal-backdrop" data-close-drawer></div>
+      <aside class="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+        <div id="drawer-content"></div>
+      </aside>
+    </div>
+
+    <div class="chat-widget" id="chat-widget">
+      <section class="chat-panel" id="chat-panel" role="dialog" aria-labelledby="chat-title" aria-hidden="true">
+        <header class="chat-head">
+          <div><p class="section-kicker">ASISTENTE VIRTUAL</p><h3 id="chat-title">Chat Magno Tours</h3></div>
+          <button class="icon-button" type="button" aria-label="Cerrar chat" data-close-chat data-icon="close"></button>
+        </header>
+        <div class="chat-body">
+          <div class="chat-bubble">
+            <strong>¡Hola!</strong>
+            <p>Soy el asistente de Magno Tours. Pregúntame por destinos, promociones o requisitos de viaje, o pídeme que registre una solicitud.</p>
+          </div>
+        </div>
+        <form class="chat-input" id="chat-form">
+          <input type="text" placeholder="Escribe tu pregunta" maxlength="500" />
+          <button class="btn btn-primary" type="submit">Enviar</button>
+        </form>
+      </section>
+      <button class="chat-fab" type="button" id="chat-toggle" aria-label="Abrir chat" aria-expanded="false" data-icon="chat"></button>
+    </div>
+
+    <!-- Inicio de sesión: usuario y contraseña de la tabla usuario -->
+    <div class="splash login-screen hide" id="login-screen" role="dialog" aria-labelledby="login-title" aria-hidden="true">
+      <form class="splash-content login-card" id="login-form" novalidate>
+        <div class="brand-mark splash-mark" aria-hidden="true">
+          <span class="brand-sun"></span>
+          <span class="brand-path"></span>
+        </div>
+        <strong class="splash-title" id="login-title">MAGNO</strong>
+        <span class="splash-sub">TOURS</span>
+        <label>Usuario<input name="usuario" type="text" autocomplete="username" /></label>
+        <label>Contraseña<input name="contrasena" type="password" autocomplete="current-password" /></label>
+        <p class="login-error" aria-live="polite"></p>
+        <button class="btn btn-danger" type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+  </body>
+</html>

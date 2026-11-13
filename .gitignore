@@ -1,0 +1,6 @@
+node_modules/
+clave-ia.txt
+output/
+tmp/
+*.log
+.env
